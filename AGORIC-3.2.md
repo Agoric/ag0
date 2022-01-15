@@ -9,8 +9,9 @@ cp build.linux/ag0{,-agoric-3.1}
 Propose software upgrade governance:
 
 ```sh
-voting_period=240
-height=$(( $(./ag0.sh status | jq -r .SyncInfo.latest_block_height) + $voting_period / 3 ))
+voting_period_s=240
+latest_height=$(./ag0.sh status | jq -r .SyncInfo.latest_block_height)
+height=$(( $latest_height + $voting_period_s / 3 ))
 chainid=$( ./ag0.sh status | jq -r .NodeInfo.network )
 ./ag0.sh tx gov submit-proposal software-upgrade agoric-3.2 --upgrade-height="$height" \
   --title="Enable true vesting accounts" --description="allow bla bla bla" \
