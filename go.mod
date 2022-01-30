@@ -118,7 +118,7 @@ require (
 	nhooyr.io/websocket v1.8.6 // indirect
 )
 
-replace github.com/cosmos/cosmos-sdk => github.com/agoric-labs/cosmos-sdk v0.44.5-alpha.agoric.ag0.3
+replace github.com/cosmos/cosmos-sdk => github.com/agoric-labs/cosmos-sdk v0.44.5-alpha.agoric.ag0.5
 
 replace (
 	github.com/gogo/protobuf => github.com/regen-network/protobuf v1.3.3-alpha.regen.1
