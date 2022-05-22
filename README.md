@@ -15,7 +15,6 @@ chain with support for Cosmos-layer validation, staking, and governance.
 Update current and install required packages:
 
 ```bash
-# Install Git
 sudo apt update && sudo apt upgrade -y
 sudo apt install build-essential make gcc git jq -y
 ```
@@ -88,7 +87,7 @@ cp $HOME/go/bin/ag0 $HOME/.agoric/cosmovisor/genesis/bin
 
 Set up service
 Commands sent to Cosmovisor are sent to the underlying binary. For example, `cosmovisor version` is the same as typing `ag0 version`.
-Nevertheless, just as we would manage junod using a process manager, we would like to make sure Cosmovisor is automatically restarted if something happens, for example an error or reboot.
+Nevertheless, just as we would manage ag0 using a process manager, we would like to make sure Cosmovisor is automatically restarted if something happens, for example an error or reboot.
 
 ```bash
 sudo nano /etc/systemd/system/cosmovisor.service
@@ -121,6 +120,8 @@ sudo -S systemctl daemon-reload
 sudo -S systemctl enable cosmovisor
 ```
 
+To quickly get in sync, download a snapshot from one of the providers listed on https://github.com/Agoric/validator-profiles/wiki/Snapshots and follow the instructions on their page. This is important to do before starting up your node. 
+
 #### Useful Commands
 
 
@@ -143,4 +144,3 @@ Check the node's sync status
 ```bash
 curl localhost:26657/status
 ```
-
