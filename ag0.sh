@@ -5,4 +5,4 @@ tx | keys)
   shift
   ;;
 esac
-exec build/ag0 --home=build.linux/node0/gaiad ${1+"$@"}
+exec ./build/ag0 --home=build.linux/node0/gaiad ${1+"$@"}
