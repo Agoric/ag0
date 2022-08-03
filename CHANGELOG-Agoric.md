@@ -36,7 +36,9 @@ Ref: https://keepachangelog.com/en/1.0.0/
 
 ## [Unreleased]
 
-* Merge cosmos/gaia v7.0.2
+## [agoric-upgrade-7] - 2022-08-02
+
+* Merge cosmos/gaia v7.0.2 [diff](https://github.com/cosmos/gaia/compare/v7.0.2...Agoric:ag0:Agoric-upgrade-7)
 
 ## [agoric-upgrade-6] - 2022-07-15
 

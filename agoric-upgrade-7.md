@@ -1,10 +1,8 @@
-# Agoric Upgrade 6 Testing Instructions
+# Agoric Upgrade 7 Testing Instructions
 
 - Reason for upgrade:
 
-Due to an issue fixed in v6.0.0 final, an ante-handler decorator `ante.NewSetUpContextDecorator()` was not included, resulting in cumulative gas caluculation.
-
-Additionally during debugging, it was discovered that MaxGas was not set in consensus, which results in the usage of InfiniteGasMeter which lead to issues.  This parameter will be changed during upgrade by the upgrade handler to 120000000.
+To align with Gaia v7.0.2, this release upgrades ag0 from agoric-upgrade-6 (v6.0.0-rc1) to v7.0.2
 
 # Testing instructions
 
@@ -16,8 +14,8 @@ Prerequisites:
 ### Run:
 
 ```sh
-baseupgradename=agoric-upgrade-5
-toupgradename=agoric-upgrade-6
+baseupgradename=agoric-upgrade-6
+toupgradename=agoric-upgrade-7
 git checkout tags/$baseupgradename
 rm -rf build.linux
 make build build-linux
@@ -44,21 +42,6 @@ while true; do
 done
 ```
 
-### Query transactions at a specific height:
-```sh
-./ag0.sh query txs --events=tx.height=30
-```
-
-Note: In the bugged version, in a block with multiple tx, the gas_used is cumulative. For example:
-```
-./ag0.sh query txs --events=tx.height=32 | grep gas_used
-  gas_used: "325991"
-  gas_used: "410011"
-  gas_used: "494031"
-  gas_used: "578051"
-```
-After this update, the gas for the load transactions above should not be cumulative, and relatively similar for each transaction.
-
 ### Propose software upgrade governance:
 
 ```sh
@@ -66,7 +49,7 @@ latest_height=$(./ag0.sh status | jq -r .SyncInfo.latest_block_height)
 voting_period_s=240
 height=$(( $latest_height + $voting_period_s / 4 ))
 ./ag0.sh tx gov submit-proposal software-upgrade $toupgradename --upgrade-height="$height" \
-  --title="Upgrade to ${toupgradename}" --description="Fixes gas calculation" \
+  --title="Upgrade to ${toupgradename}" --description="upgrades ag0 to v7.0.2 ${toupgradename}" \
   --from=node0 --chain-id="$chainid" -bblock --yes
 ```
 
@@ -100,16 +83,4 @@ rm -rf build.linux
 mv _build.linux build.linux
 docker-compose up -d
 docker-compose logs -f gaiadnode0
-```
-
-### Validate
-
-Run the load transactions from above, and validate that gas is lower and similar for the multiple transactions, and not cumulative.
-
-```
- ./ag0.sh query txs --events=tx.height=157 | grep gas_used
-  gas_used: "77552"
-  gas_used: "77642"
-  gas_used: "77642"
-  gas_used: "77642"
 ```
